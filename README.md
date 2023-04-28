@@ -63,5 +63,7 @@ API
 Перед началом работы оправляем запрос 
 @Post http://localhost:5100/actors/load загружаются все актеры в бд
 
+@Get http://localhost:5100/actors/:id получить актера по PersonId
+
 
 
