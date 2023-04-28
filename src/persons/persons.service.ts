@@ -12,4 +12,9 @@ export class PersonsService {
         const newPersons = await this.personsRepository.create(dto)
         return newPersons;
     }
+
+    async getPersonsByFilmId(number: number): Promise<Persons> {
+        const persons = await  this.personsRepository.findOne({where: {filmId: number}});
+        return persons;
+    }
 }

@@ -1,5 +1,5 @@
 export class CreateActorDto{
-    readonly id: number;
+    readonly id?: number;
     readonly name: string;
     readonly nameEn: string;
     readonly sex: string;
@@ -12,4 +12,5 @@ export class CreateActorDto{
     readonly deathplace: string;
     readonly profession: string;
     readonly facts: string;
+    readonly films: string;
 }

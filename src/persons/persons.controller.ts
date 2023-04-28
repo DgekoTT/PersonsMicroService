@@ -10,8 +10,15 @@ export class PersonsController {
                 @Inject("PERSON_SERVICE") private readonly client: ClientProxy) {}
 
     @MessagePattern({cmd: 'createPersons'})
-    createPersons(@Body() dto: CreatePersonDto): Promise<Persons>{
-        return this.personsService.createPersons(dto)
-
+    createPersons(@Body() dto: string): Promise<Persons>{
+        const personsDto = JSON.parse(dto)
+        console.log(personsDto)
+        return this.personsService.createPersons(personsDto);
     }
+
+    @MessagePattern({cmd: "getPersons"})
+    getPersons(id: string): Promise<Persons>{
+        return this.personsService.getPersonsByFilmId(+id);
+    }
+
 }
