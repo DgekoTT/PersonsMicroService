@@ -20,6 +20,11 @@ interface ActorsCreationAttrs {
 
 }
 
+type Film = {
+    filmId: number;
+    name: string;
+};
+
 @Table({tableName: 'actors'})
 export class Actors extends Model<Actors, ActorsCreationAttrs> {
     @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
@@ -51,5 +56,5 @@ export class Actors extends Model<Actors, ActorsCreationAttrs> {
     @Column({type: DataType.ARRAY(DataType.TEXT)})
     facts: string[];
     @Column({type: DataType.JSONB})
-    films: any[];
+    films: Film[];
 }

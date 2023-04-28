@@ -70,4 +70,9 @@ export class ActorsService {
             }
         }
     }
+
+    async getActorByPersonId(id: number): Promise<Actors> {
+        const actor = await this.actorsRepository.findOne({where: {personId : id}})
+        return actor;
+    }
 }
