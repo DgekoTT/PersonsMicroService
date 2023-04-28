@@ -27,47 +27,41 @@
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
-
+Клонируем проект далее
 ```bash
-$ npm install
+$ npm install (устанавливаем все необходимые зависимости)
 ```
+
+#установка RabbitMQ
+$ npm i --save amqplib amqp-connection-manager 
+
+#Configuration
+$ npm i --save @nestjs/config
+
+#Sequelize Integration
+$ npm install --save @nestjs/sequelize sequelize sequelize-typescript
+$ npm install --save-dev @types/sequelize
+
+# Postgres
+$ npm install --save pg pg-hstore 
 
 ## Running the app
 
-```bash
-# development
-$ npm run start
+#через Pgadmin4 
+создаем бд persons
 
-# watch mode
-$ npm run start:dev
+#для запуска сервера
 
-# production mode
-$ npm run start:prod
-```
+npm run start:devPersons
 
-## Test
+#для прослушивания сообщений
 
-```bash
-# unit tests
-$ npm run test
+npm run PersonsListener
 
-# e2e tests
-$ npm run test:e2e
+API
 
-# test coverage
-$ npm run test:cov
-```
+Перед началом работы оправляем запрос 
+@Post http://localhost:5000/actors/load загружаются все актеры в бд
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
