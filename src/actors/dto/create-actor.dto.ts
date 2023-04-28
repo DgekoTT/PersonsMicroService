@@ -11,6 +11,6 @@ export class CreateActorDto{
     readonly birthplace: string;
     readonly deathplace: string;
     readonly profession: string;
-    readonly facts: string;
-    readonly films: string;
+    readonly facts: string[];
+    readonly films: any[];
 }

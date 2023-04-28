@@ -15,8 +15,8 @@ interface ActorsCreationAttrs {
     birthplace: string;
     deathplace: string;
     profession: string;
-    facts: string;
-    films: string;
+    facts: string[];
+    films: any[];
 
 }
 
@@ -32,7 +32,7 @@ export class Actors extends Model<Actors, ActorsCreationAttrs> {
     nameEn: string;
     @Column({type: DataType.STRING})
     sex: string;
-    @Column({type: DataType.STRING})
+    @Column({type: DataType.TEXT})
     posterUrl: string;
     @Column({type: DataType.STRING})
     growth: string;
@@ -48,9 +48,8 @@ export class Actors extends Model<Actors, ActorsCreationAttrs> {
     deathplace: string;
     @Column({type: DataType.STRING})
     profession: string;
-    @Column({type: DataType.STRING})
-    facts: string;
-    @Column({type: DataType.STRING})
-    films: string;
-
+    @Column({type: DataType.ARRAY(DataType.TEXT)})
+    facts: string[];
+    @Column({type: DataType.JSONB})
+    films: any[];
 }

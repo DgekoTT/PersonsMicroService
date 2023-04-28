@@ -7,7 +7,7 @@ export class ActorsController {
     }
 
     @Post('/loadActors')
-    loadActors(): string{
+    loadActors(): Promise<string>{
         return this.actorsService.loadActors();
     }
 }

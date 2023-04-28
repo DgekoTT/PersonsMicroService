@@ -10,19 +10,13 @@ import {CreateActorDto} from "./dto/create-actor.dto";
 export class ActorsService {
     constructor(@InjectModel(Actors) private actorsRepository: typeof Actors) {
     }
-    loadActors(): string {
+
+    async loadActors(): Promise<string> {
         for (let i=0; i < 1; i++) {
             try{
                 let data = fs.readFileSync('G://AA//person-microservice//src//actors//actorsData//actors0.json', 'utf8')
                 let info = JSON.parse(data);
-                let names = [];
-                for( let el of info){
-                    let actor = this.makeDataActor(el);
-                    if(!names.includes(actor.name)){
-                        names.push(actor.name)
-                        console.log(actor)
-                    }
-                }
+                await this.loadToBase(info);
             }catch (e) {
                 console.log(e);
             }
@@ -52,11 +46,28 @@ export class ActorsService {
 
     }
 
-    private findFilms(films): string {
-        let allFilms = '';
+    private findFilms(films): any[] {
+        let allFilms = [];
+        let filmData = []; //для проверки дубликатов
         for (let name of films){
-            allFilms += (name.nameRu || name.nameEn)+ '; ';
+            if(!filmData.includes(name.nameRu || name.nameEn)) {
+                filmData.push(name.nameRu || name.nameEn);
+                allFilms.push({
+                    filmId: name.filmId,
+                    name: (name.nameRu || name.nameEn)})
+            }
         }
         return allFilms;
+    }
+
+    private async loadToBase(info: any) {
+        let names = [];//для проверки дубликатов
+        for (let el of info) {
+            let actor = this.makeDataActor(el);
+            if (!names.includes(actor.name)) {
+                names.push(actor.name);
+                await this.actorsRepository.create(actor);
+            }
+        }
     }
 }
