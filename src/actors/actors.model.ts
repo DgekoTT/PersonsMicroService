@@ -2,7 +2,8 @@ import {Column, DataType, Model, Table} from "sequelize-typescript";
 
 
 interface ActorsCreationAttrs {
-    id: number;
+    id?: number;
+    personId: number;
     name: string;
     nameEn: string;
     sex: string;
@@ -15,13 +16,16 @@ interface ActorsCreationAttrs {
     deathplace: string;
     profession: string;
     facts: string;
+    films: string;
 
 }
 
 @Table({tableName: 'actors'})
 export class Actors extends Model<Actors, ActorsCreationAttrs> {
-    @Column({type: DataType.INTEGER, unique: true, primaryKey: true})
+    @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
     id: number;
+    @Column({type: DataType.INTEGER})
+    personId: number;
     @Column({type: DataType.STRING})
     name: string;
     @Column({type: DataType.STRING})
@@ -46,5 +50,7 @@ export class Actors extends Model<Actors, ActorsCreationAttrs> {
     profession: string;
     @Column({type: DataType.STRING})
     facts: string;
+    @Column({type: DataType.STRING})
+    films: string;
 
 }
