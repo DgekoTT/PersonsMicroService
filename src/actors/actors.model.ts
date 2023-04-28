@@ -16,12 +16,12 @@ interface ActorsCreationAttrs {
     deathplace: string;
     profession: string;
     facts: string[];
-    films: any[];
+    films: Film[];
 
 }
 
 type Film = {
-    filmId: number;
+    filmSpId: number;
     name: string;
 };
 
