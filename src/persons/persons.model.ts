@@ -19,6 +19,8 @@ export class Persons extends Model<Persons, PersonsCreationAttrs> {
     @Column({type: DataType.INTEGER})
     filmId: number;
     @Column({type: DataType.STRING})
+    director: string;
+    @Column({type: DataType.STRING})
     scenario: string;
     @Column({type: DataType.STRING})
     producer: string;

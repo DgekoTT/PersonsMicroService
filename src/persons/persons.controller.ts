@@ -17,7 +17,7 @@ export class PersonsController {
     }
 
     @MessagePattern({cmd: "getPersons"})
-    getPersons(id: string): Promise<Persons>{
+    getPersons(id: string): Promise<{}>{
         return this.personsService.getPersonsByFilmId(+id);
     }
 
