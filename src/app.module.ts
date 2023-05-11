@@ -6,10 +6,17 @@ import {SequelizeModule} from "@nestjs/sequelize";
 import {Actors} from "./actors/actors.model";
 import {Persons} from "./persons/persons.model";
 import {ClientsModule, Transport} from "@nestjs/microservices";
+import {HttpModule} from "@nestjs/axios";
 
 
 @Module({
   imports: [
+      //npm install --save @nestjs/axios
+      HttpModule.register({
+          baseURL: `${process.env.APP_BASE_URL}`,
+          timeout: 5000, // время ожидания ответа
+          headers: { 'Access-Control-Allow-Origin': '*' }, // разрешить CORS для всех источников
+      }),
       ConfigModule.forRoot({
         envFilePath: `.${process.env.NODE_ENV}.env`
       }),
