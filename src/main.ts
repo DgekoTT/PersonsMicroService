@@ -4,7 +4,14 @@ import { AppModule } from './app.module';
 
 async function persons() {
   const PORT = process.env.PORT || 4070;
-  const app = await NestFactory.create(AppModule, {cors:true});
+  const app = await NestFactory.create(AppModule);
+  app.enableCors({
+    origin: "*",
+    credentials: true,// отвечает за куки
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 200
+  });
   await app.listen(PORT, ()=> console.log(`Server Persons is started on PORT = ${PORT} `));
 }
 
