@@ -4,13 +4,16 @@ import { ActorsService } from './actors.service';
 import {SequelizeModule} from "@nestjs/sequelize";
 import {Actors} from "./actors.model";
 import {Persons} from "../persons/persons.model";
+import {JwtModule} from "@nestjs/jwt";
 
 @Module({
   controllers: [ActorsController],
   providers: [ActorsService],
-  imports: [SequelizeModule.forFeature([Persons, Actors])],
+  imports: [SequelizeModule.forFeature([Persons, Actors]),
+    JwtModule
+  ],
   exports: [
-      ActorsService
+      ActorsService,
   ]
 })
 export class ActorsModule {}

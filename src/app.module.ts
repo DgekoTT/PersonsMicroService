@@ -7,6 +7,9 @@ import {Actors} from "./actors/actors.model";
 import {Persons} from "./persons/persons.model";
 import {ClientsModule, Transport} from "@nestjs/microservices";
 import {HttpModule} from "@nestjs/axios";
+import {JwtModule} from "@nestjs/jwt";
+import {JwtAuthGuard} from "./Guards/jwt-auth.guard";
+import {RolesGuard} from "./Guards/role.guard";
 
 
 @Module({
@@ -44,8 +47,14 @@ import {HttpModule} from "@nestjs/axios";
           autoLoadModels: true,
           logging: true
       }),
-      PersonsModule, ActorsModule],
+      PersonsModule, ActorsModule,
+      JwtModule.register({
+          secret: "FFFGKJKFWMV",
+          signOptions: {//время жизни токена
+              expiresIn: '24h'
+          }
+      }),],
   controllers: [],
-  providers: [],
+  providers: [JwtAuthGuard, RolesGuard],
 })
 export class AppModule {}

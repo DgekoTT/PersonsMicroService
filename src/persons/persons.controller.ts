@@ -1,7 +1,6 @@
 import {Body, Controller, Inject} from '@nestjs/common';
 import {PersonsService} from "./persons.service";
 import {ClientProxy, MessagePattern} from "@nestjs/microservices";
-import {CreatePersonDto} from "./dto/create-person.dto";
 import {Persons} from "./persons.model";
 
 @Controller('persons')
