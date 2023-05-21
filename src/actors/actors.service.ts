@@ -26,7 +26,7 @@ export class ActorsService {
 
     private makeDataActor(el: any): CreateActorDto {
         let films = this.findFilms(el.films);
-        let data = {
+        return  {
             personId: el.personId,
             name: el.nameRu,
             nameEn: el.nameEn,
@@ -42,8 +42,6 @@ export class ActorsService {
             facts: el.facts,
             films: films
         }
-          return data;
-
     }
 
     private findFilms(films): any[] {
@@ -66,13 +64,12 @@ export class ActorsService {
             let actor = this.makeDataActor(el);
             if (!names.includes(actor.name)) {
                 names.push(actor.name);
-                await this.actorsRepository.create(actor);
+                await this.actorsRepository.create(info);
             }
         }
     }
 
     async getActorByPersonId(id: number): Promise<Actors> {
-        const actor = await this.actorsRepository.findOne({where: {personId : id}})
-        return actor;
+       return  await this.actorsRepository.findOne({where: {personId : id}})
     }
 }
