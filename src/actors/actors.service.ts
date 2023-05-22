@@ -6,6 +6,7 @@ import {CreateActorDto} from "./dto/create-actor.dto";
 
 
 
+
 @Injectable()
 export class ActorsService {
     constructor(@InjectModel(Actors) private actorsRepository: typeof Actors) {
@@ -70,7 +71,9 @@ export class ActorsService {
         }
     }
 
-    async getActorByPersonId(id: number): Promise<Actors> {
-       return await this.actorsRepository.findOne({where: {personId : id}})
+    async getActorByPersonId(id: number): Promise<Actors | string> {
+        const  actor = await this.actorsRepository.findOne({where: {personId : id}})
+        return (!actor) ? `Актер с данным personId ${id} не найден` : actor
+
     }
 }
