@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectModel} from "@nestjs/sequelize";
 import {Actors} from "./actors.model";
 import * as fs from "fs";
@@ -19,6 +19,7 @@ export class ActorsService {
                 await this.loadToBase(info);
             }catch (e) {
                 console.log(e);
+                throw new HttpException('load error', HttpStatus.BAD_REQUEST)
             }
         }
         return `successes`;
@@ -64,12 +65,12 @@ export class ActorsService {
             let actor = this.makeDataActor(el);
             if (!names.includes(actor.name)) {
                 names.push(actor.name);
-                await this.actorsRepository.create(info);
+                await this.actorsRepository.create(actor);
             }
         }
     }
 
     async getActorByPersonId(id: number): Promise<Actors> {
-       return  await this.actorsRepository.findOne({where: {personId : id}})
+       return await this.actorsRepository.findOne({where: {personId : id}})
     }
 }

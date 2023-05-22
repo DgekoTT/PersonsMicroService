@@ -6,7 +6,7 @@ export class CreateActorDto{
     @IsOptional()
     readonly id?: number;
 
-    @ApiProperty({example: '114225', description: 'id ключ из списка актеров из бд персон'})
+    @ApiProperty({example: 114225, description: 'id ключ из списка актеров из бд персон'})
     readonly personId: number;
 
     @ApiProperty({example: 'Ник Стил', description: 'имя актера на русском'})

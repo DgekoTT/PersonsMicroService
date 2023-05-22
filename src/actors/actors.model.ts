@@ -9,10 +9,10 @@ interface ActorsCreationAttrs {
     nameEn: string;
     sex: string;
     posterUrl: string;
-    growth: string;
+    growth: number;
     birthday: string;
     death: string;
-    age: string;
+    age: number;
     birthplace: string;
     deathplace: string;
     profession: string;
@@ -32,7 +32,7 @@ export class Actors extends Model<Actors, ActorsCreationAttrs> {
     @Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
     id: number;
 
-    @ApiProperty({example: '114225', description: 'id ключ из списка актеров из бд персон'})
+    @ApiProperty({example: 114225, description: 'id ключ из списка актеров из бд персон'})
     @Column({type: DataType.INTEGER})
     personId: number;
 
@@ -54,7 +54,7 @@ export class Actors extends Model<Actors, ActorsCreationAttrs> {
 
     @ApiProperty({example: 178, description: 'рост актера'})
     @Column({type: DataType.INTEGER})
-    growth: string;
+    growth: number;
 
     @ApiProperty({example: "1980-07-28", description: 'день рождения актера'})
     @Column({type: DataType.STRING})
@@ -66,7 +66,7 @@ export class Actors extends Model<Actors, ActorsCreationAttrs> {
 
     @ApiProperty({example: 41, description: 'возвраст актера'})
     @Column({type: DataType.INTEGER})
-    age: string;
+    age: number;
 
     @ApiProperty({example: "США", description: 'место рождения актера'})
     @Column({type: DataType.STRING})
