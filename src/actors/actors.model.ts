@@ -53,7 +53,7 @@ export class Actors extends Model<Actors, ActorsCreationAttrs> {
     posterUrl: string;
 
     @ApiProperty({example: 178, description: 'рост актера'})
-    @Column({type: DataType.NUMBER})
+    @Column({type: DataType.INTEGER})
     growth: string;
 
     @ApiProperty({example: "1980-07-28", description: 'день рождения актера'})
@@ -65,7 +65,7 @@ export class Actors extends Model<Actors, ActorsCreationAttrs> {
     death: string;
 
     @ApiProperty({example: 41, description: 'возвраст актера'})
-    @Column({type: DataType.NUMBER})
+    @Column({type: DataType.INTEGER})
     age: string;
 
     @ApiProperty({example: "США", description: 'место рождения актера'})
