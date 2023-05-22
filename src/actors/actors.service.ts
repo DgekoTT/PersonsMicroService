@@ -12,9 +12,9 @@ export class ActorsService {
     }
 
     async loadActors(): Promise<string> {
-        for (let i=0; i < 1; i++) {// Проходим по всем файлам в папке. Пока беру 1
+        for (let i=0; i < 21; i++) {// Проходим по всем файлам в папке
             try{
-                let data = fs.readFileSync('./src/actors/actorsData/actors0.json', 'utf8')
+                let data = fs.readFileSync(`./src/actors/actorsData/actors${i}.json`, 'utf8')
                 let info = JSON.parse(data);
                 await this.loadToBase(info);
             }catch (e) {
