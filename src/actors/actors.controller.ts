@@ -26,4 +26,11 @@ export class ActorsController {
         return this.actorsService.getActorByPersonId(+id);
     }
 
+    // @ApiOperation({summary: 'получаем актера по person id'})
+    // @ApiResponse({status: 200, description: 'Успешный запрос', type: String, isArray: false})
+    // @Get('/:id')
+    // getActorByPersonId(@Param('id')id : number): Promise<Actors | string>  {
+    //     return this.actorsService.getActorByPersonId(+id);
+    // }
+
 }

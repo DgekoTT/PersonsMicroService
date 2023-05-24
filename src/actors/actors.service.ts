@@ -9,6 +9,7 @@ import {CreateActorDto} from "./dto/create-actor.dto";
 
 @Injectable()
 export class ActorsService {
+    private professionKey: number;
     constructor(@InjectModel(Actors) private actorsRepository: typeof Actors) {
     }
 
@@ -54,7 +55,9 @@ export class ActorsService {
                 filmData.push(name.nameRu || name.nameEn);
                 allFilms.push({
                     filmId: name.filmId,
-                    name: (name.nameRu || name.nameEn)})
+                    name: (name.nameRu || name.nameEn),
+                    professionKey: name.professionKey
+                })
             }
         }
         return allFilms;

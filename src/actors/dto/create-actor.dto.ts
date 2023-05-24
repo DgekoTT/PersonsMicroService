@@ -61,18 +61,12 @@ export class CreateActorDto{
                 "filmId": 18361,
                 "nameRu": "Новичкам везет",
                 "nameEn": "Beginner's Luck",
-                "rating": null,
-                "general": false,
-                "description": "Jean-Yves",
                 "professionKey": "ACTOR"
             },
             {
                 "filmId": 498313,
                 "nameRu": "Французские связи",
                 "nameEn": "Paris Connections",
-                "rating": "5.5",
-                "general": false,
-                "description": "William Brown",
                 "professionKey": "ACTOR"
             },], description: 'список фильмов актера,  "filmId": 498313 это filmSpId в бд фильмов'})
     readonly films: any[];
