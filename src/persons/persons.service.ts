@@ -9,18 +9,16 @@ export class PersonsService {
     constructor(@InjectModel(Persons) private personsRepository: typeof Persons) {}
 
     async createPersons(dto: CreatePersonDto): Promise<Persons> {
-        const newPersons = await this.personsRepository.create(dto)
-        return newPersons;
+        return await this.personsRepository.create(dto)
     }
 
     async getPersonsByFilmId(number: number): Promise<{}> {
         const persons = await  this.personsRepository.findOne({where: {filmId: number}});
-        const personsInfo = this.makePersonsInfo(persons);
-        return personsInfo;
+        return  this.makePersonsInfo(persons);
     }
 
     makePersonsInfo(persons: Persons) {
-        const personsInfo = {
+      return  {
         director: persons.director,
         scenario: persons.scenario,
         producer: persons.producer,
@@ -30,6 +28,5 @@ export class PersonsService {
         installation: persons.installation,
         actors: persons.actors,
         }
-        return personsInfo;
     }
 }
