@@ -9,7 +9,7 @@ async function microService() {
     const app = await NestFactory.createMicroservice(AppModule,{
         transport: Transport.RMQ,
         options: {
-            urls: ['amqp://localhost:5672'], //rabbitmq
+            urls: [`${process.env.RABBITMQ}`],
             queue: 'films_queue',
             queueOptions: {
                 durable: false
