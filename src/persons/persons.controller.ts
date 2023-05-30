@@ -11,13 +11,18 @@ export class PersonsController {
     @MessagePattern({cmd: 'createPersons'})
     createPersons(@Body() dto: string): Promise<Persons>{
         const personsDto = JSON.parse(dto)
-        console.log(personsDto)
         return this.personsService.createPersons(personsDto);
     }
 
     @MessagePattern({cmd: "getPersons"})
     getPersons(id: string): Promise<{}>{
         return this.personsService.getPersonsByFilmId(+id);
+    }
+
+    @MessagePattern({cmd: "Find film id by actor or director"})
+    findFilmIdByActorOrDirector(@Body() dto: string){
+        const {director, actor} = JSON.parse(dto)
+        return this.personsService.findFilmIdByActorOrDirector(director, actor);
     }
 
 }
