@@ -31,20 +31,19 @@ export class PersonsService {
         }
     }
 
-   async findFilmIdByActorOrDirector(directorName: any, actorName: any): Promise<number[]> {
-       const whereCondition: any = {};
-
-       if (directorName) {
-           whereCondition.director = directorName.trim();
-       }
-
-       if (actorName) {
-           whereCondition.actors = {
-               [Op.contains]: { [Op.ne]: null, [actorName]: { [Op.ne]: null } },
-           };
-       }
-
-       const persons = await Persons.findAll({ where: whereCondition });
-       return persons.map(el => el.filmId);
-   }
+   // async findFilmIdByActorOrDirector(directorName: any, actorName: any): Promise<number[]> {
+   //
+   //     if (directorName) {
+   //         whereCondition.director = directorName.trim();
+   //     }
+   //
+   //     if (actorName) {
+   //         whereCondition.actors = {
+   //             [Op.contains]:  actorName.trim() ,
+   //         };
+   //     }
+   //
+   //     const persons = await Persons.findAll({ where: whereCondition });
+   //     return persons.map(el => el.filmId);
+   // }
 }

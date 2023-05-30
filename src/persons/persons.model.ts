@@ -10,7 +10,7 @@ interface PersonsCreationAttrs {
     composer: string,
     painter: string,
     installation: string,
-    actors: {}
+    actors: string[]
 }
 
 @Table({tableName: 'persons'})
@@ -51,12 +51,12 @@ export class Persons extends Model<Persons, PersonsCreationAttrs> {
     @Column({type: DataType.STRING})
     installation: string;
 
-    @ApiProperty({example: {"6373": "Дэвид Лодж",
-            "24474": "Николас Ройе",
-            "39055": "Джессика Ги",
-            "111280": "Бен Дискин",
-            "262573": "Грант Джордж",
-            "1219815": "Фарук Тохид"}, description: 'в главных ролях по ключу можно найти в бд актеров'})
-    @Column({type: DataType.JSONB})
-    actors: {};
+    @ApiProperty({example: ["Дэвид Лодж",
+            "Николас Ройе",
+            "Джессика Ги",
+            "Бен Дискин",
+            "Грант Джордж",
+            "Фарук Тохид"], description: 'в главных ролях по ключу можно найти в бд актеров'})
+    @Column({type: DataType.ARRAY(DataType.STRING)})
+    actors: string[];
 }

@@ -5,11 +5,13 @@ import {SequelizeModule} from "@nestjs/sequelize";
 import {Persons} from "./persons.model";
 import {Actors} from "../actors/actors.model";
 import {ClientsModule, Transport} from "@nestjs/microservices";
+import {Helper} from "../helper/makeFilmAndPersons";
 
 @Module({
   controllers: [PersonsController],
-  providers: [PersonsService],
-  imports: [ClientsModule.register([
+  providers: [PersonsService, Helper],
+  imports: [
+  ClientsModule.register([
     {
       name: "PERSON_SERVICE",
       transport: Transport.RMQ,
