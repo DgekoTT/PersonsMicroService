@@ -25,11 +25,11 @@ export class CreatePersonDto {
     @ApiProperty({example: 'Эфраим Клейн', description: 'инсталяторы'})
     readonly installation: string;
 
-    @ApiProperty({example: {"6373": "Дэвид Лодж",
-            "24474": "Николас Ройе",
-            "39055": "Джессика Ги",
-            "111280": "Бен Дискин",
-            "262573": "Грант Джордж",
-            "1219815": "Фарук Тохид"}, description: 'в главных ролях по ключу можно найти в бд актеров'})
-    readonly actors:{};
+    @ApiProperty({example: ["Дэвид Лодж",
+            "Николас Ройе",
+            "Джессика Ги",
+            "Бен Дискин",
+            "Грант Джордж",
+            "Фарук Тохид"], description: 'в главных ролях по ключу можно найти в бд актеров'})
+    readonly actors: string[];
 }

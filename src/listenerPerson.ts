@@ -6,7 +6,6 @@ import {Transport} from "@nestjs/microservices";
 что бы микросервис работал параллельно с прослушивание порта
 добавляем в package.json*/
 async function microService() {
-
     const app = await NestFactory.createMicroservice(AppModule,{
         transport: Transport.RMQ,
         options: {
