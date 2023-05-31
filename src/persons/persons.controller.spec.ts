@@ -20,7 +20,17 @@ describe('PersonsController', () => {
           actors: dto.actors
           }
          }
-      )
+      ),
+
+      getPersonsByFilmId: jest.fn(() => {
+        return ["Дэвид Лодж",
+        "Николас Ройе",
+        "Джессика Ги",
+        "Бен Дискин",
+        "Грант Джордж",
+        "Фарук Тохид"]
+      })
+      
   }
 
 
@@ -79,5 +89,15 @@ describe('PersonsController', () => {
                       "Грант Джордж",
                       "Фарук Тохид"]
             })
+  });
+
+  it('should be called getPerson', () => {
+    personsController.getPersons('123');
+    expect(spyService.getPersonsByFilmId(123)).toEqual(["Дэвид Лодж",
+    "Николас Ройе",
+    "Джессика Ги",
+    "Бен Дискин",
+    "Грант Джордж",
+    "Фарук Тохид"])
   });
 });
