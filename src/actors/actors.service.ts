@@ -63,7 +63,7 @@ export class ActorsService {
         return allFilms;
     }
 
-    private async loadToBase(info: any) {
+    private async loadToBase(info: any) : Promise<void> {
         let names = [];//для проверки дубликатов
         for (let el of info) {
             let actor = this.makeDataActor(el);
