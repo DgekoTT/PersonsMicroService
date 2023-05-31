@@ -30,7 +30,7 @@ export class ActorsController {
     @ApiOperation({summary: 'получаем актера по строке  в имени РУ'})
     @ApiResponse({status: 200, description: 'Успешный запрос', type: String, isArray: false})
     @Get('/name')
-    getActorsByName(@Query() nameDto : NameActorDto) {
+    getActorsByName(@Query() nameDto : NameActorDto) : Promise<Actors[]> {
         return this.actorsService.getActorsByName(nameDto);
     }
 
