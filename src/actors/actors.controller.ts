@@ -1,9 +1,10 @@
-import {Controller, Get, Param, Post, UseGuards} from '@nestjs/common';
+import {Controller, Get, Param, Post, Query, UseGuards} from '@nestjs/common';
 import {ActorsService} from "./actors.service";
 import {Actors} from "./actors.model";
 import {Roles} from "../Guards/roles-auth.decorator";
 import {RolesGuard} from "../Guards/role.guard";
 import {ApiCookieAuth, ApiOperation, ApiResponse} from "@nestjs/swagger";
+import { NameActorDto } from './dto/name-actor.dto ';
 
 @Controller('actors')
 export class ActorsController {
@@ -25,6 +26,14 @@ export class ActorsController {
     getActorByPersonId(@Param('id')id : number): Promise<Actors | string>  {
         return this.actorsService.getActorByPersonId(+id);
     }
+
+    @ApiOperation({summary: 'получаем актера по строке  в имени РУ'})
+    @ApiResponse({status: 200, description: 'Успешный запрос', type: String, isArray: false})
+    @Get('/name')
+    getActorsByName(@Query() nameDto : NameActorDto) {
+        return this.actorsService.getActorsByName(nameDto);
+    }
+
 
 
 }
