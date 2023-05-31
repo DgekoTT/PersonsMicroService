@@ -8,7 +8,8 @@ import { log } from 'console';
 @Controller('persons')
 export class PersonsController {
     constructor(private personsService: PersonsService,
-                @Inject("PERSON_SERVICE") private readonly client: ClientProxy,) {}
+                //@Inject("PERSON_SERVICE") private readonly client: ClientProxy,
+                ) {}
 
     @MessagePattern({cmd: 'createPersons'})
     createPersons(@Body() dto: string): Promise<Persons>{
