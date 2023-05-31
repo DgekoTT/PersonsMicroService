@@ -76,13 +76,13 @@ export class ActorsService {
         }
     }
 
-    async getActorByPersonId(id: number): Promise<Actors | string> {
+    async getActorByPersonId(id: number) : Promise<Actors | string> {
         const  actor = await this.actorsRepository.findOne({where: {personId : id}})
         return (!actor) ? `Актер с данным personId ${id} не найден` : actor
 
     }
 
-    async getActorsByName(name: NameActorDto) {
+    async getActorsByName(name: NameActorDto) : Promise<Actors[]> {
         const whereOption = name.nameEn ? {name: {[Op.like]: `%${name.nameEn}%`}} : {name: {[Op.like]: `%${decodeURI(name.name)}%`}}
         return this.actorsRepository.findAll({ 
             where: whereOption,

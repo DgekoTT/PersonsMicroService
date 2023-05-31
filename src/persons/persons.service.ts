@@ -4,6 +4,7 @@ import {Persons} from "./persons.model";
 import {InjectModel} from "@nestjs/sequelize";
 import {Op} from "sequelize";
 import { NameDirectorDto } from './dto/name-director.dto ';
+import {DirectorInfo, PersonsInfo} from "../inretfaces/persons.interfaces";
 
 
 @Injectable()
@@ -14,12 +15,12 @@ export class PersonsService {
         return await this.personsRepository.create(dto)
     }
 
-    async getPersonsByFilmId(number: number): Promise<{}> {
+    async getPersonsByFilmId(number: number) : Promise<PersonsInfo>{
         const persons = await  this.personsRepository.findOne({where: {filmId: number}});
         return  this.makePersonsInfo(persons);
     }
 
-    makePersonsInfo(persons: Persons) {
+    makePersonsInfo(persons: Persons) : PersonsInfo {
       return  {
         director: persons?.director,
         scenario: persons?.scenario,
@@ -32,7 +33,7 @@ export class PersonsService {
         }
     }
 
-   async findFilmIdByActorOrDirector(directorName: any, actorName: any){
+   async findFilmIdByActorOrDirector(directorName: any, actorName: any) : Promise<number[]>{
         let whereCondition: any = {};
     
         if (directorName) {
@@ -48,7 +49,7 @@ export class PersonsService {
        return persons.map(el => el.filmId);
    }
 
-   async getDirectorByName(nameDto: NameDirectorDto) {
+   async getDirectorByName(nameDto: NameDirectorDto) : Promise<DirectorInfo[]> {
     let name = decodeURI(nameDto.name)
     console.log(name)
     const persons: Persons[] = await this.personsRepository.findAll({ 

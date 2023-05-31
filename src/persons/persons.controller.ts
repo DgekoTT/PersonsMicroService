@@ -6,6 +6,7 @@ import {Helper} from "../helper/makeFilmAndPersons";
 import { log } from 'console';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { NameDirectorDto } from './dto/name-director.dto ';
+import {DirectorInfo, PersonsInfo} from "../inretfaces/persons.interfaces";
 
 @Controller('persons')
 export class PersonsController {
@@ -19,12 +20,12 @@ export class PersonsController {
     }
 
     @MessagePattern({cmd: "getPersons"})
-    getPersons(id: string): Promise<{}>{
+    getPersons(id: string): Promise<PersonsInfo>{
         return this.personsService.getPersonsByFilmId(+id);
     }
 
     @MessagePattern({cmd: "Find film id by actor or director"})
-    findFilmIdByActorOrDirector(@Body() dto: string){
+    findFilmIdByActorOrDirector(@Body() dto: string) : Promise<number[]>{
         const {director, actor} = JSON.parse(dto)
         return this.personsService.findFilmIdByActorOrDirector(director, actor);
     }
@@ -32,7 +33,7 @@ export class PersonsController {
     @ApiOperation({summary: 'получаем режиссеров по буквам в имени'})
     @ApiResponse({status: 200, description: 'Успешный запрос', type: String, isArray: false})
     @Get('/name')
-    getDirectorByName(@Query() nameDto : NameDirectorDto)  {
+    getDirectorByName(@Query() nameDto : NameDirectorDto) : Promise<DirectorInfo[]>   {
         return this.personsService.getDirectorByName(nameDto);
     }
 
