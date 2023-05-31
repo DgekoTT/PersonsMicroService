@@ -14,9 +14,7 @@ export class PersonsService {
     }
 
     async getPersonsByFilmId(number: number): Promise<{}> {
-        console.log(number)
         const persons = await  this.personsRepository.findOne({where: {filmId: number}});
-        console.log(persons)
         return  this.makePersonsInfo(persons);
     }
 

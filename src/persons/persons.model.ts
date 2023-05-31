@@ -1,17 +1,7 @@
 import {Column, DataType, Model, Table} from "sequelize-typescript";
 import {ApiProperty} from "@nestjs/swagger";
+import { PersonsCreationAttrs } from "src/inretfaces/persons.interfaces";
 
-interface PersonsCreationAttrs {
-    filmId: number,
-    director: string,
-    scenario: string,
-    producer: string,
-    operator: string,
-    composer: string,
-    painter: string,
-    installation: string,
-    actors: string[]
-}
 
 @Table({tableName: 'persons'})
 export class Persons extends Model<Persons, PersonsCreationAttrs> {

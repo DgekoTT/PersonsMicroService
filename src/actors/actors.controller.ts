@@ -3,7 +3,7 @@ import {ActorsService} from "./actors.service";
 import {Actors} from "./actors.model";
 import {Roles} from "../Guards/roles-auth.decorator";
 import {RolesGuard} from "../Guards/role.guard";
-import {ApiCookieAuth, ApiOperation, ApiResponse} from "@nestjs/swagger";
+import {ApiCookieAuth, ApiOperation, ApiParam, ApiResponse} from "@nestjs/swagger";
 import { NameActorDto } from './dto/name-actor.dto ';
 
 @Controller('actors')
@@ -27,13 +27,13 @@ export class ActorsController {
         return this.actorsService.getActorByPersonId(+id);
     }
 
-    @ApiOperation({summary: 'получаем актера по строке  в имени РУ'})
-    @ApiResponse({status: 200, description: 'Успешный запрос', type: String, isArray: false})
+    @ApiOperation({summary: 'получаем актеров по буквам в имени'})
+    @ApiResponse({status: 200, description: 'Успешный запрос', type: String, isArray: true})
     @Get('/name')
     getActorsByName(@Query() nameDto : NameActorDto) : Promise<Actors[]> {
         return this.actorsService.getActorsByName(nameDto);
     }
 
-
-
 }
+
+
