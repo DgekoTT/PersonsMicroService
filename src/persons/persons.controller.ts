@@ -1,9 +1,10 @@
-import {Body, Controller, Get, Inject} from '@nestjs/common';
+import {Body, Controller, Get, Inject, Query} from '@nestjs/common';
 import {PersonsService} from "./persons.service";
 import {ClientProxy, MessagePattern} from "@nestjs/microservices";
 import {Persons} from "./persons.model";
 import {Helper} from "../helper/makeFilmAndPersons";
 import { log } from 'console';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('persons')
 export class PersonsController {
@@ -25,6 +26,13 @@ export class PersonsController {
     findFilmIdByActorOrDirector(@Body() dto: string){
         const {director, actor} = JSON.parse(dto)
         return this.personsService.findFilmIdByActorOrDirector(director, actor);
+    }
+
+    @ApiOperation({summary: 'получаем режиссеров по буквам в имени'})
+    @ApiResponse({status: 200, description: 'Успешный запрос', type: String, isArray: false})
+    @Get('/name')
+    getActorsByName(@Query() nameDto : NameActorDto)  {
+        return this.personsService.getActorsByName(nameDto);
     }
 
 }
