@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreatePersonDto } from './dto/create-person.dto';
 import {Persons} from "./persons.model";
 import {InjectModel} from "@nestjs/sequelize";
-import sequelize, {Op} from "sequelize";
+import {Op} from "sequelize";
 
 
 @Injectable()
@@ -14,36 +14,38 @@ export class PersonsService {
     }
 
     async getPersonsByFilmId(number: number): Promise<{}> {
+        console.log(number)
         const persons = await  this.personsRepository.findOne({where: {filmId: number}});
+        console.log(persons)
         return  this.makePersonsInfo(persons);
     }
 
     makePersonsInfo(persons: Persons) {
       return  {
-        director: persons.director,
-        scenario: persons.scenario,
-        producer: persons.producer,
-        operator: persons.operator,
-        composer: persons.composer,
-        painter: persons.painter,
-        installation: persons.installation,
-        actors: persons.actors,
+        director: persons?.director,
+        scenario: persons?.scenario,
+        producer: persons?.producer,
+        operator: persons?.operator,
+        composer: persons?.composer,
+        painter: persons?.painter,
+        installation: persons?.installation,
+        actors: persons?.actors,
         }
     }
 
-   // async findFilmIdByActorOrDirector(directorName: any, actorName: any): Promise<number[]> {
-   //
-   //     if (directorName) {
-   //         whereCondition.director = directorName.trim();
-   //     }
-   //
-   //     if (actorName) {
-   //         whereCondition.actors = {
-   //             [Op.contains]:  actorName.trim() ,
-   //         };
-   //     }
-   //
-   //     const persons = await Persons.findAll({ where: whereCondition });
-   //     return persons.map(el => el.filmId);
-   // }
+   async findFilmIdByActorOrDirector(directorName: any, actorName: any){
+        let whereCondition: any = {};
+    
+        if (directorName) {
+            whereCondition.director = {[Op.like]: `%${directorName.trim()}%`};
+        }
+    
+        if (actorName) {
+            whereCondition.actors = {
+                [Op.contains]: [`${actorName.trim()}`]
+            };
+        }
+       const persons = await this.personsRepository.findAll({ where: whereCondition });
+       return persons.map(el => el.filmId);
+   }
 }

@@ -3,6 +3,8 @@ import {InjectModel} from "@nestjs/sequelize";
 import {Actors} from "./actors.model";
 import * as fs from "fs";
 import {CreateActorDto} from "./dto/create-actor.dto";
+import {Op} from "sequelize";
+import { NameActorDto } from './dto/name-actor.dto ';
 
 
 
@@ -78,5 +80,13 @@ export class ActorsService {
         const  actor = await this.actorsRepository.findOne({where: {personId : id}})
         return (!actor) ? `Актер с данным personId ${id} не найден` : actor
 
+    }
+
+    async getActorsByName(name: NameActorDto) {
+        const whereOption = name.nameEn ? {name: {[Op.like]: `%${name.nameEn}%`}} : {name: {[Op.like]: `%${decodeURI(name.name)}%`}}
+        return this.actorsRepository.findAll({ 
+            where: whereOption,
+            limit: 10,
+        })
     }
 }

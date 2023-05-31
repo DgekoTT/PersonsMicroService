@@ -16,7 +16,7 @@ import {Helper} from "../helper/makeFilmAndPersons";
       name: "PERSON_SERVICE",
       transport: Transport.RMQ,
       options:{
-        urls: ['amqp://localhost:5672'],
+        urls: [`${process.env.RABBITMQ}`],
         queue: 'persons_queue',
         queueOptions: {
           durable: false

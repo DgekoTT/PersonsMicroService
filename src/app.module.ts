@@ -28,7 +28,7 @@ import {RolesGuard} from "./Guards/role.guard";
               name: 'Profile_Service',
               transport: Transport.RMQ,
               options: {
-                  urls: ['amqp://localhost:5672'],
+                  urls: [`${process.env.RABBITMQ}`],
                   queue: 'persons_queue',
                   queueOptions: {
                       durable: false
