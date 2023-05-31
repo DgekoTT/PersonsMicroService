@@ -5,6 +5,7 @@ import {Persons} from "./persons.model";
 import {Helper} from "../helper/makeFilmAndPersons";
 import { log } from 'console';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { NameDirectorDto } from './dto/name-director.dto ';
 
 @Controller('persons')
 export class PersonsController {
@@ -31,8 +32,8 @@ export class PersonsController {
     @ApiOperation({summary: 'получаем режиссеров по буквам в имени'})
     @ApiResponse({status: 200, description: 'Успешный запрос', type: String, isArray: false})
     @Get('/name')
-    getActorsByName(@Query() nameDto : NameActorDto)  {
-        return this.personsService.getActorsByName(nameDto);
+    getDirectorByName(@Query() nameDto : NameDirectorDto)  {
+        return this.personsService.getDirectorByName(nameDto);
     }
 
 }

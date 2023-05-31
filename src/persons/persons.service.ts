@@ -3,6 +3,7 @@ import { CreatePersonDto } from './dto/create-person.dto';
 import {Persons} from "./persons.model";
 import {InjectModel} from "@nestjs/sequelize";
 import {Op} from "sequelize";
+import { NameDirectorDto } from './dto/name-director.dto ';
 
 
 @Injectable()
@@ -46,4 +47,16 @@ export class PersonsService {
        const persons = await this.personsRepository.findAll({ where: whereCondition });
        return persons.map(el => el.filmId);
    }
+
+   async getDirectorByName(nameDto: NameDirectorDto) {
+    let name = decodeURI(nameDto.name)
+    console.log(name)
+    const persons: Persons[] = await this.personsRepository.findAll({ 
+        where: {director: {[Op.like]: `%${name}%`}},
+        limit: 10,
+    })
+    return persons.map(el => {
+        return { director: el.director, filmId: el.filmId };
+      });
+}
 }
