@@ -1,23 +1,36 @@
-import { Injectable } from '@nestjs/common';
+import {Inject, Injectable} from '@nestjs/common';
 import { CreatePersonDto } from './dto/create-person.dto';
 import {Persons} from "./persons.model";
 import {InjectModel} from "@nestjs/sequelize";
 import {Op} from "sequelize";
 import { NameDirectorDto } from './dto/name-director.dto ';
 import {DirectorInfo, PersonsInfo} from "../inretfaces/persons.interfaces";
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
+
 
 
 @Injectable()
 export class PersonsService {
-    constructor(@InjectModel(Persons) private personsRepository: typeof Persons) {}
+    constructor(@InjectModel(Persons) private personsRepository: typeof Persons,
+                @Inject(CACHE_MANAGER) private cacheManager: Cache) {}
 
     async createPersons(dto: CreatePersonDto): Promise<Persons> {
         return await this.personsRepository.create(dto)
     }
 
-    async getPersonsByFilmId(number: number) : Promise<PersonsInfo>{
+    async getPersonsByFilmId(number: number) : Promise<PersonsInfo | {message: string} >{
+        const cachePersons = await this.cacheManager.get<Persons>(number.toString())
+
+        if (cachePersons) return cachePersons;
+
         const persons = await  this.personsRepository.findOne({where: {filmId: number}});
-        return  this.makePersonsInfo(persons);
+        if (!persons) {
+            return { message: `Актер с данным personId ${number} не найден` };
+        }
+        const personsInfo =  this.makePersonsInfo(persons);
+        await this.cacheManager.set(number.toString(), personsInfo);
+        return personsInfo
     }
 
     makePersonsInfo(persons: Persons) : PersonsInfo {
@@ -34,19 +47,21 @@ export class PersonsService {
     }
 
    async findFilmIdByActorOrDirector(directorName: any, actorName: any) : Promise<number[]>{
-        let whereCondition: any = {};
-    
-        if (directorName) {
-            whereCondition.director = {[Op.like]: `%${directorName.trim()}%`};
-        }
-    
-        if (actorName) {
-            whereCondition.actors = {
-                [Op.contains]: [`${actorName.trim()}`]
-            };
-        }
+        let whereCondition: any = this.checkProfession( directorName, actorName)
+
+       const cacheKey = `getFilmIdsByDirectorAndActor:${JSON.stringify(whereCondition)}`;
+       const cachedFilmIds = await this.cacheManager.get<number[]>(cacheKey);
+
+       if (cachedFilmIds) {
+           return cachedFilmIds;
+       }
+
        const persons = await this.personsRepository.findAll({ where: whereCondition });
-       return persons.map(el => el.filmId);
+       const filmIds = persons.map(el => el.filmId);
+
+       await this.cacheManager.set(cacheKey, filmIds);
+
+       return filmIds;
    }
 
    async getDirectorByName(nameDto: NameDirectorDto) : Promise<DirectorInfo[]> {
@@ -60,4 +75,18 @@ export class PersonsService {
         return { director: el.director, filmId: el.filmId };
       });
 }
+
+    private checkProfession(directorName: any, actorName: any) {
+        let whereCondition: any = {}
+        if (directorName) {
+            whereCondition.director = {[Op.like]: `%${directorName.trim()}%`};
+        }
+
+        if (actorName) {
+            whereCondition.actors = {
+                [Op.contains]: [`${actorName.trim()}`]
+            };
+        }
+        return whereCondition
+    }
 }

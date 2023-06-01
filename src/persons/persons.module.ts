@@ -6,6 +6,7 @@ import {Persons} from "./persons.model";
 import {Actors} from "../actors/actors.model";
 import {ClientsModule, Transport} from "@nestjs/microservices";
 import {Helper} from "../helper/makeFilmAndPersons";
+import {CacheModule} from "@nestjs/cache-manager";
 
 @Module({
   controllers: [PersonsController],
@@ -24,7 +25,8 @@ import {Helper} from "../helper/makeFilmAndPersons";
       }
     }
   ]),
-      SequelizeModule.forFeature([Persons, Actors]),
+       SequelizeModule.forFeature([Persons, Actors]),
+       CacheModule.register()
   ],
   exports: [
       PersonsService

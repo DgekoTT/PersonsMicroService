@@ -23,7 +23,7 @@ export class ActorsController {
     @ApiOperation({summary: 'получаем актера по person id'})
     @ApiResponse({status: 200, description: 'Успешный запрос', type: String, isArray: false})
     @Get('/id/:id')
-    getActorByPersonId(@Param('id')id : number): Promise<Actors | string>  {
+    getActorByPersonId(@Param('id')id : number): Promise<Actors | {message: string} > {
         return this.actorsService.getActorByPersonId(+id);
     }
 
