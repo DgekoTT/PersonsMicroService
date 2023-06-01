@@ -20,7 +20,7 @@ export class PersonsController {
     }
 
     @MessagePattern({cmd: "getPersons"})
-    getPersons(id: string): Promise<PersonsInfo>{
+    getPersons(id: string) : Promise<PersonsInfo | {message: string}> {
         return this.personsService.getPersonsByFilmId(+id);
     }
 

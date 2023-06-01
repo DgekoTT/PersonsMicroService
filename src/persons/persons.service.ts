@@ -19,7 +19,7 @@ export class PersonsService {
         return await this.personsRepository.create(dto)
     }
 
-    async getPersonsByFilmId(number: number) : Promise<PersonsInfo | {message: string} >{
+    async getPersonsByFilmId(number: number) : Promise<PersonsInfo | {message: string}> {
         const cachePersons = await this.cacheManager.get<Persons>(number.toString())
 
         if (cachePersons) return cachePersons;
