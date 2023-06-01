@@ -105,7 +105,7 @@ export class ActorsService {
         }
 
         const whereOption = this.makeWhereOption(name)
-
+        console.log(whereOption)
         const actors = await this.actorsRepository.findAll({
             where: whereOption,
             limit: 10,
@@ -118,7 +118,7 @@ export class ActorsService {
 
     private makeWhereOption(name: NameActorDto) {
         if (name.nameEn) {
-            return { name: { [Op.like]: `%${name.nameEn}%` } }
+            return { nameEn: { [Op.like]: `%${name.nameEn}%` } }
         } else {
             return { name: { [Op.like]: `%${decodeURI(name.name)}%`}}
         }

@@ -20,17 +20,13 @@ export class PersonsService {
     }
 
     async getPersonsByFilmId(number: number) : Promise<PersonsInfo | {message: string}> {
-        const cachePersons = await this.cacheManager.get<Persons>(number.toString())
-
-        if (cachePersons) return cachePersons;
 
         const persons = await  this.personsRepository.findOne({where: {filmId: number}});
+
         if (!persons) {
-            return { message: `Актер с данным personId ${number} не найден` };
+            return { message: `Персоны с данным personId ${number} не найдены` };
         }
-        const personsInfo =  this.makePersonsInfo(persons);
-        await this.cacheManager.set(number.toString(), personsInfo);
-        return personsInfo
+        return  this.makePersonsInfo(persons);
     }
 
     makePersonsInfo(persons: Persons) : PersonsInfo {
@@ -49,19 +45,9 @@ export class PersonsService {
     async findFilmIdByActorOrDirector(directorName: any, actorName: any) : Promise<number[]>{
         let whereCondition: any = this.checkProfession( directorName, actorName)
 
-        const cacheKey = `getFilmIdsByDirectorAndActor:${JSON.stringify(whereCondition)}`;
-        const cachedFilmIds = await this.cacheManager.get<number[]>(cacheKey);
-
-        if (cachedFilmIds) {
-            return cachedFilmIds;
-        }
-
         const persons = await this.personsRepository.findAll({ where: whereCondition });
-        const filmIds = persons.map(el => el.filmId);
 
-        await this.cacheManager.set(cacheKey, filmIds);
-
-        return filmIds;
+        return persons.map(el => el.filmId);
     }
 
    async getDirectorByName(nameDto: NameDirectorDto): Promise<DirectorInfo[]> {
