@@ -7,6 +7,7 @@ import { log } from 'console';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { NameDirectorDto } from './dto/name-director.dto ';
 import {DirectorInfo, PersonsInfo} from "../inretfaces/persons.interfaces";
+import { CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('persons')
 export class PersonsController {
@@ -33,6 +34,7 @@ export class PersonsController {
     @ApiOperation({summary: 'получаем режиссеров по буквам в имени'})
     @ApiResponse({status: 200, description: 'Успешный запрос', type: String, isArray: false})
     @Get('/name')
+    @CacheTTL(60)
     getDirectorByName(@Query() nameDto : NameDirectorDto) : Promise<DirectorInfo[]>   {
         return this.personsService.getDirectorByName(nameDto);
     }

@@ -5,6 +5,7 @@ import {Roles} from "../Guards/roles-auth.decorator";
 import {RolesGuard} from "../Guards/role.guard";
 import {ApiCookieAuth, ApiOperation, ApiParam, ApiResponse} from "@nestjs/swagger";
 import { NameActorDto } from './dto/name-actor.dto ';
+import { CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('actors')
 export class ActorsController {
@@ -23,6 +24,7 @@ export class ActorsController {
     @ApiOperation({summary: 'получаем актера по person id'})
     @ApiResponse({status: 200, description: 'Успешный запрос', type: String, isArray: false})
     @Get('/id/:id')
+    @CacheTTL(60)
     getActorByPersonId(@Param('id')id : number): Promise<Actors | {message: string} > {
         return this.actorsService.getActorByPersonId(+id);
     }
@@ -30,6 +32,7 @@ export class ActorsController {
     @ApiOperation({summary: 'получаем актеров по буквам в имени'})
     @ApiResponse({status: 200, description: 'Успешный запрос', type: String, isArray: true})
     @Get('/name')
+    @CacheTTL(60)
     getActorsByName(@Query() nameDto : NameActorDto) : Promise<Actors[]> {
         return this.actorsService.getActorsByName(nameDto);
     }

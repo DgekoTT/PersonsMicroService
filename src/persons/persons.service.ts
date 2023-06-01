@@ -46,35 +46,47 @@ export class PersonsService {
         }
     }
 
-   async findFilmIdByActorOrDirector(directorName: any, actorName: any) : Promise<number[]>{
+    async findFilmIdByActorOrDirector(directorName: any, actorName: any) : Promise<number[]>{
         let whereCondition: any = this.checkProfession( directorName, actorName)
 
-       const cacheKey = `getFilmIdsByDirectorAndActor:${JSON.stringify(whereCondition)}`;
-       const cachedFilmIds = await this.cacheManager.get<number[]>(cacheKey);
+        const cacheKey = `getFilmIdsByDirectorAndActor:${JSON.stringify(whereCondition)}`;
+        const cachedFilmIds = await this.cacheManager.get<number[]>(cacheKey);
 
-       if (cachedFilmIds) {
-           return cachedFilmIds;
-       }
+        if (cachedFilmIds) {
+            return cachedFilmIds;
+        }
 
-       const persons = await this.personsRepository.findAll({ where: whereCondition });
-       const filmIds = persons.map(el => el.filmId);
+        const persons = await this.personsRepository.findAll({ where: whereCondition });
+        const filmIds = persons.map(el => el.filmId);
 
-       await this.cacheManager.set(cacheKey, filmIds);
+        await this.cacheManager.set(cacheKey, filmIds);
 
-       return filmIds;
-   }
+        return filmIds;
+    }
 
-   async getDirectorByName(nameDto: NameDirectorDto) : Promise<DirectorInfo[]> {
-    let name = decodeURI(nameDto.name)
-    console.log(name)
-    const persons: Persons[] = await this.personsRepository.findAll({ 
-        where: {director: {[Op.like]: `%${name}%`}},
+   async getDirectorByName(nameDto: NameDirectorDto): Promise<DirectorInfo[]> {
+        let name = decodeURI(nameDto.name);
+    
+        const cacheKey = `getDirectorByName:${name}`;
+        const cachedDirectorInfo = await this.cacheManager.get<DirectorInfo[]>(cacheKey);
+    
+        if (cachedDirectorInfo) return cachedDirectorInfo;
+        
+    
+        const persons: Persons[] = await this.personsRepository.findAll({
+        where: { director: { [Op.like]: `%${name}%` } },
         limit: 10,
-    })
-    return persons.map(el => {
-        return { director: el.director, filmId: el.filmId };
-      });
-}
+        });
+    
+        const directorInfo = persons.map(el => ({
+            director: el.director,
+            filmId: el.filmId,
+        }));
+    
+        await this.cacheManager.set(cacheKey, directorInfo);
+    
+        return directorInfo;
+    }
 
     private checkProfession(directorName: any, actorName: any) {
         let whereCondition: any = {}
