@@ -77,7 +77,7 @@ export class PersonsService {
     private checkProfession(directorName: any, actorName: any) {
         let whereCondition: any = {}
         if (directorName) {
-            whereCondition.director = {[Op.like]: `%${directorName.trim()}%`};
+            whereCondition.director = {[Op.iLike]: `%${directorName.trim()}%`};
         }
 
         if (actorName) {

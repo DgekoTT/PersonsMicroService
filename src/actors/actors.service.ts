@@ -118,9 +118,9 @@ export class ActorsService {
 
     private makeWhereOption(name: NameActorDto) {
         if (name.nameEn) {
-            return { nameEn: { [Op.like]: `%${name.nameEn}%` } }
+            return { nameEn: { [Op.iLike]: `%${name.nameEn}%` } }
         } else {
-            return { name: { [Op.like]: `%${decodeURI(name.name)}%`}}
+            return { name: { [Op.iLike]: `%${decodeURI(name.name)}%`}}
         }
 
     }
