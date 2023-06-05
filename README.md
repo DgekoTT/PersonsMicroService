@@ -23,8 +23,11 @@
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+В данном микросервисе находят актеры из фильмов и персоны (люди которые участвовали в создании фильма) режиссерЮ сценарист и т.д.
+ Запускаем через docker-compose в микросервисе фильма
+ 
+ ## Swager
+http://localhost:5100/api/docs
 
 ## Installation
 Клонируем проект далее
