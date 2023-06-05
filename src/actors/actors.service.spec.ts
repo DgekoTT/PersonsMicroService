@@ -39,7 +39,7 @@ describe('ActorsService', () => {
 
 
   describe('getActorByPersonId', () => {
-    it('should return cached actor if available', async () => {
+    it('должен вернуть актера по PersonId если это возможно', async () => {
       const cachedActor = { id: 1, name: 'John Doe' };
       jest.spyOn(cacheManager, 'get').mockResolvedValue(cachedActor);
 
@@ -50,7 +50,7 @@ describe('ActorsService', () => {
       expect(result).toBe(cachedActor);
     });
 
-    it('should return actor by personId', async () => {
+    it('должен вернуть актера по PersonId', async () => {
       const actor = { id: 1, name: 'John Doe' };
       jest.spyOn(cacheManager, 'get').mockResolvedValue(null);
       jest.spyOn(actorsRepository, 'findOne').mockResolvedValue(actor);
@@ -64,7 +64,7 @@ describe('ActorsService', () => {
       expect(result).toBe(actor);
     });
 
-    it('should return error message if actor not found', async () => {
+    it('должен вернуть сообщение об ошибке если аткер не найден', async () => {
       jest.spyOn(cacheManager, 'get').mockResolvedValue(null);
       jest.spyOn(actorsRepository, 'findOne').mockResolvedValue(null);
 
@@ -77,7 +77,7 @@ describe('ActorsService', () => {
   });
 
   describe('getActorsByName', () => {
-    it('should return cached actors if available', async () => {
+    it('должен вернуть кеш актера если он есть ', async () => {
       const nameDto: NameActorDto = { name: 'John', nameEn: null };
       const cacheKey = `getActorsByName:${JSON.stringify(nameDto)}`;
       const cachedActors = [{ id: 1, name: 'John Doe' }];
@@ -90,7 +90,7 @@ describe('ActorsService', () => {
       expect(result).toBe(cachedActors);
     });
 
-    it('should return actors by name', async () => {
+    it('должен вернуть актера по имени', async () => {
       const nameDto: NameActorDto = { name: 'John', nameEn: null };
       const cacheKey = `getActorsByName:${JSON.stringify(nameDto)}`;
       const actors = [{ id: 1, name: 'John Doe' }];
