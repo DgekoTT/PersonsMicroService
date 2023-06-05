@@ -13,7 +13,7 @@ export class CreatePersonDto {
     @ApiProperty({example: 'Маргарет М. Дин, Кимберли А. Смит', description: 'продюссеры'})
     readonly producer: string;
 
-    @ApiProperty({example: 'Бекки Нюбул,', description: 'операторы'})
+    @ApiProperty({example: 'Бекки Нюбул', description: 'операторы'})
     readonly operator: string;
 
     @ApiProperty({example: 'Бекки Нюбул, Linus of Hollywood, Гэбриел Манн', description: 'композиторы'})
